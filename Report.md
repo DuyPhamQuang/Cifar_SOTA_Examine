@@ -75,29 +75,15 @@ Su et al. (2022) — arXiv:[2204.12196](https://arxiv.org/pdf/2204.12196)
 
 **Method**: A CNN-Transformer hybrid that treats convolutional and attention branches differently with adaptive weights. Specifically, an ASF-former encoder equally splits feature channels into half to fit dual-path inputs. Then, the outputs of the dual path are fused with weights calculated from visual cues. Pretrained on **ImageNet-22k**, fine-tuned on CIFAR.
 
-| Dataset   | Model         | Pretrain    | Accuracy  |
-|-----------|---------------|-------------|-----------|
-| CIFAR-10  | ASF-former-S  | ImageNet-1k |   98.7%   |
-| CIFAR-10  | ASF-former-B  | ImageNet-1k |   98.8%   |
-| CIFAR-100 | ASF-former-S  | ImageNet-1k |   90.4%   |
-| CIFAR-100 | ASF-former-B  | ImageNet-1k |   91.0%   |
+| Dataset   | Model         | Pretrain     | Accuracy  |
+|-----------|---------------|--------------|-----------|
+| CIFAR-10  | ASF-former-S  | ImageNet-22k |   98.7%   |
+| CIFAR-10  | ASF-former-B  | ImageNet-22k |   98.8%   |
+| CIFAR-100 | ASF-former-S  | ImageNet-22k |   90.4%   |
+| CIFAR-100 | ASF-former-B  | ImageNet-22k |   91.0%   |
 
 > ✅ Public code: [szx503045266/ASF-former](https://github.com/szx503045266/ASF-former)
 
----
-
-### 4. Efficient Adaptive Ensembling
-**Paper**: *Efficient Adaptive Ensembling for Image Classification*
-Deufemia et al. (2022) — arXiv:[2206.07394](https://arxiv.org/pdf/2206.07394)
-
-**Method**: First, trained two EfficientNet-b0 end-to-end models (known to be the architecture with the best overall accuracy/complexity trade-off for image classification) on disjoint subsets of data (i.e. bagging). Then, made an efficient adaptive ensemble by performing fine-tuning of a trainable combination layer
-
-| Dataset   | Model                       | Accuracy    |
-|-----------|-----------------------------|-------------|
-| CIFAR-10  | EfficientNet-b0 × ensemble  | **99.612%** |
-| CIFAR-100 | EfficientNet-b0 × ensemble  | **96.808%**     |
-
-> No public code repository cited. Result not independently reproduced.
 ---
 
 ## Part 2: Train from Scratch
@@ -110,8 +96,7 @@ These methods train entirely on CIFAR data with no external pretraining
 **Paper**: *AutoAugment: Learning Augmentation Policies from Data*
 Cubuk et al. (2019) — arXiv:[1805.09501](https://arxiv.org/pdf/1805.09501) — **CVPR 2019**
 
-**Method**: Use **Reinforcement Learning** to automatically search for improved data augmentation policies. In our implementation, we have designed a search space where a policy consists of many subpolicies, one of which is randomly chosen for each image in each mini-batch. A sub-policy consists of two operations, each operation being an image processing function such as translation, rotation, or shearing, and the probabilities and magnitudes with which the functions are applied. We use a search algorithm to find the best policy such that
-the neural network yields the highest validation accuracy on a target dataset. Once found, the policy is applied on top of a strong backbone (PyramidNet + ShakeDrop) during standard training.
+**Method**: Use **Reinforcement Learning** to automatically search for improved data augmentation policies. In our implementation, we have designed a search space where a policy consists of many subpolicies, one of which is randomly chosen for each image in each mini-batch. A sub-policy consists of two operations, each operation being an image processing function such as translation, rotation, or shearing, and the probabilities and magnitudes with which the functions are applied. We use a search algorithm to find the best policy such that the neural network yields the highest validation accuracy on a target dataset. Once found, the policy is applied on top of a strong backbone (PyramidNet + ShakeDrop) during standard training.
 
 | Dataset   | Backbone               | Accuracy   |
 |-----------|------------------------|------------|
@@ -137,3 +122,18 @@ Lim et al. (2019) — arXiv:[1905.00397](https://arxiv.org/pdf/1905.00397) — *
 
 > ✅ Public code:
 > [kakaobrain/fast-autoaugment](https://github.com/kakaobrain/fast-autoaugment)
+
+---
+
+### 3. Efficient Adaptive Ensembling
+**Paper**: *Efficient Adaptive Ensembling for Image Classification*
+Deufemia et al. (2022) — arXiv:[2206.07394](https://arxiv.org/pdf/2206.07394)
+
+**Method**: First, trained two EfficientNet-b0 end-to-end models (known to be the architecture with the best overall accuracy/complexity trade-off for image classification) on disjoint subsets of data (i.e. bagging). Then, made an efficient adaptive ensemble by performing fine-tuning of a trainable combination layer
+
+| Dataset   | Model                       | Accuracy    |
+|-----------|-----------------------------|-------------|
+| CIFAR-10  | EfficientNet-b0 × ensemble  | **99.612%** |
+| CIFAR-100 | EfficientNet-b0 × ensemble  | **96.808%** |
+
+> No public code repository cited. Result not independently reproduced.
