@@ -137,3 +137,46 @@ Deufemia et al. (2022) — arXiv:[2206.07394](https://arxiv.org/pdf/2206.07394)
 | CIFAR-100 | EfficientNet-b0 × ensemble  | **96.808%** |
 
 > No public code repository cited. Result not independently reproduced.
+
+
+### 4. Wide Residual Networks (WRN)
+**Paper**: *Wide Residual Networks*
+Zagoruyko & Komodakis (2016) — arXiv:[1605.07146](https://arxiv.org/pdf/1605.07146) — **BMVC 2016**
+
+**Method**: Rather than stacking more layers, WRN **increases the width** of ResNet blocks by a widening factor k (up to 10×) while reducing depth. The key finding is that a 16-layer wide network can match or outperform a 1000-layer thin network, while training up to **8× faster**. Dropout is inserted between convolutional layers inside each residual block (not in the identity path) for regularization. Trained from scratch on CIFAR with standard flip + random crop augmentation only — no AutoAugment or external data.
+
+| Dataset   | Model       | Params  | Accuracy   | Augmentation     |  Dropout  |
+|-----------|-------------|---------|------------|------------------|-----------|
+| CIFAR-10  | WRN-28-10   | 36.5M   | **95.83%** |      -           |     -     |
+| CIFAR-10  | WRN-28-10   | 36.5M   | **96.00%** | flip/translation |     -     |
+| CIFAR-10  | WRN-28-10   | 36.5M   | **96.11%** |      -           |    yes    | 
+| CIFAR-10  | WRN-28-12   | 52.5M   | **95.67%** |      -           |     -     |
+| CIFAR-10  | WRN-40-10   |   -     | **96.2%**  |      -           |    yes    |
+| CIFAR-100 | WRN-28-10   | 36.5M   | **79.5%**  |      -           |     -     |
+| CIFAR-100 | WRN-28-10   | 36.5M   | **80.75%** | flip/translation |     -     |
+| CIFAR-100 | WRN-28-10   | 36.5M   | **81.15%** |      -           |    yes    |
+| CIFAR-100 | WRN-28-12   | 52.5M   | **79.57%** |      -           |     -     |  
+| CIFAR-100 | WRN-40-10   |   -     | **81.7%**  |      -           |    yes    |
+
+> ✅ Public code:
+> [szagoruyko/wide-residual-networks](https://github.com/szagoruyko/wide-residual-networks)
+
+---
+
+### 5. Training ViT on Small-Scale Datasets
+**Paper**: *How to Train Vision Transformer on Small-scale Datasets?*
+Gani et al. (2022) — arXiv:[2210.07240](https://arxiv.org/pdf/2210.07240) — **BMVC 2022**
+
+**Method**: A two-stage training framework that eliminates the need for large-scale pretraining for ViTs. **Stage 1 (Self-supervised)**: uses DINO-style local/global view prediction via a student-teacher setup to learn weight initialization directly from the small CIFAR dataset itself — capturing inductive biases without touching external data. **Stage 2 (Supervised)**: fine-tunes the same model on CIFAR using cross-entropy loss with standard augmentations (CutMix, MixUp, AutoAugment, label
+ moothing, stochastic depth). Crucially, both stages use only the target CIFAR dataset.
+
+| Dataset   | Model        | Params | Accuracy   |
+|-----------|--------------|--------|------------|
+| CIFAR-10  | ViT          | 2.8M   | **96.41%** |
+| CIFAR-100 | ViT          | 2.8M   | **79.15%** |
+
+
+> ✅ Public code:
+> [hananshafi/vits-for-small-scale-datasets](https://github.com/hananshafi/vits-for-small-scale-datasets)
+> The 96.41% ViT result outperforms all prior from-scratch ViT methods on CIFAR-10
+> while using only 2.8M parameters.
