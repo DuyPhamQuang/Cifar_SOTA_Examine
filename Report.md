@@ -178,5 +178,4 @@ Gani et al. (2022) — arXiv:[2210.07240](https://arxiv.org/pdf/2210.07240) — 
 
 > ✅ Public code:
 > [hananshafi/vits-for-small-scale-datasets](https://github.com/hananshafi/vits-for-small-scale-datasets)
-> The 96.41% ViT result outperforms all prior from-scratch ViT methods on CIFAR-10
-> while using only 2.8M parameters.
+
