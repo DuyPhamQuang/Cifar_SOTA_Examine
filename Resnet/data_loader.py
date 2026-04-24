@@ -51,7 +51,7 @@ def get_data_loaders(data_dir,
     )
 
     test_loader = torch.utils.data.DataLoader(
-        test_dataset, batch_size=batch_size, shuffle=shuffle,
+        test_dataset, batch_size=batch_size, shuffle=False,
         num_workers=num_workers, pin_memory=pin_memory
     )
           

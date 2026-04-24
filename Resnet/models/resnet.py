@@ -6,7 +6,7 @@ import torch.nn.functional as F
 class Block(nn.Module):
     """
     A 2-layer residual learning building block as illustrated by Fig.2 
-    in "Deep Residual Learning for Image Recognition" (He et al., 2015).
+    in "Deep Residual Learning for Image Recognition" (He et al., 2015)".
 
     Architecture: Conv -> BN -> ReLU -> Conv -> BN -> (+shortcut) -> ReLU
 
