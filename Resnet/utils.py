@@ -3,6 +3,7 @@ import torch
 import matplotlib
 matplotlib.use('Agg')     
 import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 
 
 def save_checkpoint(state, save_path):
@@ -128,3 +129,29 @@ def plot_history(history, milestones=None, save_path='./results/training_curves.
     plt.savefig(save_path, dpi=150, bbox_inches='tight')
     plt.close()
     print(f"  ✓ Training curves saved → {save_path}")
+
+
+def plot_accuracy(models, y_col, title, y_label, filename, COLORS, MILESTONES):
+    fig, ax = plt.subplots(figsize=(10, 5))
+
+    for (name, df), color in zip(models.items(), COLORS):
+        epochs = range(1, len(df) + 1)
+        ax.plot(epochs, df[y_col], label=name, color=color, linewidth=1.8)
+
+    for i, m in enumerate(MILESTONES):
+        ax.axvline(x=m, color='gray', linestyle='--', linewidth=0.9,
+                   label='LR drop' if i == 0 else None)
+
+    ax.set_title(title, fontsize=13, pad=12)
+    ax.set_xlabel('Epoch', fontsize=11)
+    ax.set_ylabel(y_label, fontsize=11)
+    ax.legend(loc='lower right', fontsize=10, framealpha=0.8)
+    ax.grid(True, alpha=0.3)
+    ax.xaxis.set_minor_locator(ticker.AutoMinorLocator())
+    ax.yaxis.set_minor_locator(ticker.AutoMinorLocator())
+
+    plt.tight_layout()
+    plt.savefig(filename, dpi=150, bbox_inches='tight')
+    plt.close()
+    print(f"Saved {filename}")
+
